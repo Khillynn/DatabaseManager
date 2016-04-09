@@ -1,5 +1,4 @@
 name: DatabaseManager
+main: com.khillynn.Core
 version: 1.0
-description: Learning how to use MongoDB
 author: Khillynn
-main: com.khillynn.DatabaseManager
