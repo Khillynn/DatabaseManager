@@ -16,6 +16,7 @@ public class MongoDB {
 
     public MongoClient getMongo(){
         if(mongo == null){
+            //Need to fix: NoClassDefFoundError: com/mongodb/MongoCredential
             MongoCredential credential = MongoCredential.createCredential(MongoDBD.username, MongoDBD.database, MongoDBD.password.toCharArray());
             mongo = new MongoClient(new ServerAddress(MongoDBD.host, MongoDBD.port), Arrays.asList(credential));
         }
