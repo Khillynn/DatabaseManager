@@ -13,11 +13,12 @@ public class Core extends JavaPlugin {
     public void onEnable(){
         plugin = this;
         pm = Bukkit.getPluginManager();
+        getLogger().info("DatabaseManager is Enabled! =D");
         getConfig().options().copyDefaults(true);
         saveConfig();
 
         MongoDB mdb = new MongoDB(MongoDBD.username, MongoDBD.password, MongoDBD.database, MongoDBD.host, MongoDBD.port);
-        mdb.setDAtabase(MongoDBD.database);
+        mdb.setDatabase(MongoDBD.database);
         mongoDB = mdb;
 
         regListeners();

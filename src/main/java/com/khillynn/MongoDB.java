@@ -31,19 +31,21 @@ public class MongoDB {
 
     //getter for the database
     public DB getDatabse(){
-        if(database == null)
+        if(database == null) {
             database = getMongo().getDB(MongoDBD.database);
+        }
 
         return database;
     }
 
     //connection
-    public void setDAtabase(String db){
+    public void setDatabase(String db){
         database = getMongo().getDB(db);
     }
 
     public void closeConnection(){
-        if(mongo != null)
+        if(mongo != null) {
             mongo.close();
+        }
     }
 }
