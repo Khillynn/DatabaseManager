@@ -1,6 +1,7 @@
 package com.khillynn;
 
 import com.mongodb.*;
+import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 
@@ -17,10 +18,8 @@ public class MongoDB {
             MongoCredential credential = MongoCredential.createCredential(MongoDBD.username, MongoDBD.database, MongoDBD.password.toCharArray());
             mongo = new MongoClient(new ServerAddress(MongoDBD.host, MongoDBD.port), Arrays.asList(credential));
 
-            System.out.println("mongo was null in getMongo()");
         }
 
-        System.out.println(" ********** I called getMongo()");
         return mongo;
     }
 
@@ -33,11 +32,35 @@ public class MongoDB {
     public DB getDatabase(){
         if(database == null) {
             database = getMongo().getDB(MongoDBD.database);
-            System.out.println(" ********* database was null");
         }
 
-        System.out.println(" ********** getDatabase() was called");
         return database;
+    }
+
+    public int getUserPoints(Player player){
+        int points = 0;
+
+        DBObject result = getUser(player);
+        points = (int) result.get("points");
+
+        return points;
+    }
+
+    public void incUserPoints(Player player, int incAmt) {
+        DBObject result = getUser(player);
+        result.put("$inc", new BasicDBObject("points", incAmt));
+    }
+    public DBObject getUser(Player player){
+        DBCollection table = getTable("users");
+
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("uuid", player.getUniqueId().toString());
+
+        return table.findOne(searchQuery);
+    }
+
+    public DBCollection getTable(String tableName){
+        return Core.getMongoDB().getDatabase().getCollection(tableName);
     }
 
     //connection
@@ -48,7 +71,6 @@ public class MongoDB {
     public void closeConnection(){
         if(mongo != null) {
             mongo.close();
-            System.out.println(" ********** goodbye mongo");
         }
     }
 }

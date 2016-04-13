@@ -43,7 +43,6 @@ public class Core extends JavaPlugin {
 
     void regListeners(){
         getPluginManagers().registerEvents(new PlayerLoginEventListener(), this);
-        System.out.println(" ********** just registered PlayerLoginEventListener()");
     }
 
 

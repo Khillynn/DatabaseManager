@@ -3,17 +3,19 @@ package com.khillynn;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 @SuppressWarnings("deprecation")
 public class PlayerLoginEventListener implements Listener {
+    @EventHandler //omg I can't believe I (and AgentKid) didn't see that I didn't have this EventHandler #BlameAgent
     public void onPlayerLoginEvent(PlayerLoginEvent e){
-        DBCollection table = Core.getMongoDB().getDatabase().getCollection("users");
-
+        MongoDB mdb = new MongoDB(MongoDBD.username, MongoDBD.password, MongoDBD.database, MongoDBD.host, MongoDBD.port);
+        DBCollection table = mdb.getTable("users");
+        DBObject result = mdb.getUser(e.getPlayer());
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.put("uuid", e.getPlayer().getUniqueId().toString());
-        DBObject result = table.findOne(searchQuery);
 
         //the user was found
         if(result != null){
@@ -25,7 +27,6 @@ public class PlayerLoginEventListener implements Listener {
 
                 table.update(searchQuery, fUpdate);
             }
-            System.out.println("YAY I FOUND A PLAYER'S INFO");
         }
 
         else{
@@ -38,7 +39,6 @@ public class PlayerLoginEventListener implements Listener {
             newUser.put("banned", false);
             newUser.put("banReason", null);
             table.insert(newUser);
-            System.out.println("YAY I ADDED A PLAYER'S INFO");
         }
     }
 }
