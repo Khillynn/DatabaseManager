@@ -20,8 +20,6 @@ public class Core extends JavaPlugin {
         MongoDB mdb = new MongoDB(MongoDBD.username, MongoDBD.password, MongoDBD.database, MongoDBD.host, MongoDBD.port);
         mdb.setDatabase(MongoDBD.database);
         mongoDB = mdb;
-
-        regListeners();
     }
 
     @Override
@@ -41,9 +39,9 @@ public class Core extends JavaPlugin {
         return pm;
     }
 
-    void regListeners(){
+    /*void regListeners(){
         getPluginManagers().registerEvents(new PlayerLoginEventListener(), this);
-    }
+    }*/
 
 
 }

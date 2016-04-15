@@ -17,7 +17,6 @@ public class MongoDB {
             //Need to fix: NoClassDefFoundError: com/mongodb/MongoCredential
             MongoCredential credential = MongoCredential.createCredential(MongoDBD.username, MongoDBD.database, MongoDBD.password.toCharArray());
             mongo = new MongoClient(new ServerAddress(MongoDBD.host, MongoDBD.port), Arrays.asList(credential));
-
         }
 
         return mongo;
@@ -40,16 +39,27 @@ public class MongoDB {
     public int getUserPoints(Player player){
         int points = 0;
 
-        DBObject result = getUser(player);
-        points = (int) result.get("points");
+        if(getUser(player) != null) {
+            points = (int) getUser(player).get("points");
+            System.out.println(" ++++++++++ " +  player.getName() + "'s points are " + points);
+        }
 
         return points;
     }
 
     public void incUserPoints(Player player, int incAmt) {
+        DBCollection table = getTable("users");
         DBObject result = getUser(player);
-        result.put("$inc", new BasicDBObject("points", incAmt));
+
+        //the user was found
+        if(result != null){
+            BasicDBObject fUpdate = new BasicDBObject();
+            fUpdate.put("$inc", new BasicDBObject("points", incAmt));
+
+            table.update(result, fUpdate);
+        }
     }
+
     public DBObject getUser(Player player){
         DBCollection table = getTable("users");
 
