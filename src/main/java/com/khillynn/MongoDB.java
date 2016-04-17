@@ -43,21 +43,28 @@ public class MongoDB {
             points = (int) getUser(player).get("points");
             System.out.println(" ++++++++++ " +  player.getName() + "'s points are " + points);
         }
+        else{
+            System.out.println(" ++++++++++ ERROR: Player not found...defaulting points to " + points + ".");
+        }
 
         return points;
     }
 
     public void incUserPoints(Player player, int incAmt) {
         DBCollection table = getTable("users");
-        DBObject result = getUser(player);
 
         //the user was found
-        if(result != null){
+        if(getUser(player) != null) {
+            System.out.println(" ++++++++++ The user " + player.getName() + " was found.");
+            BasicDBObject searchQuery = new BasicDBObject();
+            searchQuery.put("uuid", player.getUniqueId().toString());
             BasicDBObject fUpdate = new BasicDBObject();
             fUpdate.put("$inc", new BasicDBObject("points", incAmt));
 
-            table.update(result, fUpdate);
+            table.update(searchQuery, fUpdate);
         }
+
+        System.out.println(" ++++++++++ incUserPoints() ran with the player: " + player.getName());
     }
 
     public DBObject getUser(Player player){

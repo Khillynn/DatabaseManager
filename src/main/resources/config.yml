@@ -1,6 +1,6 @@
 mongo:
     username: 'root'
     password: 'Password321!'
-    database: 'test'
+    database: 'users'
     host: '127.0.0.1'
     port: 27017
