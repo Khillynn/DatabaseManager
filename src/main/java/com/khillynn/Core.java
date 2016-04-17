@@ -17,7 +17,7 @@ public class Core extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
 
-        MongoDB mdb = new MongoDB(MongoDBD.username, MongoDBD.password, MongoDBD.database, MongoDBD.host, MongoDBD.port);
+        MongoDB mdb = new MongoDB(MongoDBD.host, MongoDBD.port);
         mdb.setDatabase(MongoDBD.database);
         mongoDB = mdb;
     }

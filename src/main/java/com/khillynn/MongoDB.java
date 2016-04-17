@@ -14,7 +14,6 @@ public class MongoDB {
 
     public Mongo getMongo(){
         if(mongo == null){
-            //Need to fix: NoClassDefFoundError: com/mongodb/MongoCredential
             MongoCredential credential = MongoCredential.createCredential(MongoDBD.username, MongoDBD.database, MongoDBD.password.toCharArray());
             mongo = new MongoClient(new ServerAddress(MongoDBD.host, MongoDBD.port), Arrays.asList(credential));
         }
@@ -23,14 +22,14 @@ public class MongoDB {
     }
 
     //this is for registering
-    public MongoDB(String username, String password, String database2, String host, int port){
+    public MongoDB(String host, int port){
         mongo = new MongoClient(new ServerAddress(host, port));
     }
 
     //getter for the database
     public DB getDatabase(){
         if(database == null) {
-            database = getMongo().getDB(MongoDBD.database);
+            throw new RuntimeException("Database not set up yet!");
         }
 
         return database;
