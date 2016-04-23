@@ -29,7 +29,7 @@ public class MongoDB {
     //getter for the database
     public DB getDatabase(){
         if(database == null) {
-            throw new RuntimeException("Database not set up yet!");
+            throw new RuntimeException(" ++++++++++ Database not set up yet!");
         }
 
         return database;
@@ -40,7 +40,6 @@ public class MongoDB {
 
         if(getUser(player) != null) {
             points = (int) getUser(player).get("points");
-            System.out.println(" ++++++++++ " +  player.getName() + "'s points are " + points);
         }
         else{
             System.out.println(" ++++++++++ ERROR: Player not found...defaulting points to " + points + ".");
@@ -54,7 +53,6 @@ public class MongoDB {
 
         //the user was found
         if(getUser(player) != null) {
-            System.out.println(" ++++++++++ The user " + player.getName() + " was found.");
             BasicDBObject searchQuery = new BasicDBObject();
             searchQuery.put("uuid", player.getUniqueId().toString());
             BasicDBObject fUpdate = new BasicDBObject();
@@ -62,8 +60,6 @@ public class MongoDB {
 
             table.update(searchQuery, fUpdate);
         }
-
-        System.out.println(" ++++++++++ incUserPoints() ran with the player: " + player.getName());
     }
 
     public DBObject getUser(Player player){

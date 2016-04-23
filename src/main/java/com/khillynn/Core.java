@@ -39,7 +39,7 @@ public class Core extends JavaPlugin {
         return pm;
     }
 
-    /*void regListeners(){
+    /* void regListeners(){
         getPluginManagers().registerEvents(new PlayerLoginEventListener(), this);
     }*/
 
